@@ -31,7 +31,7 @@ El sistema se apoya en una base de datos relacional que sigue este diseño:
 
 ## 🛠️ Tecnologías utilizadas
 - **Java 21 / Spring Boot** → Backend y servicios REST.
-- **PostgreSQL** → Base de datos principal.
+- **Mongodb** → Base de datos principal.
 - **React**  → Front del servicio.
 
 ---
