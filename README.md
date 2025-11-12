@@ -4,6 +4,7 @@ Este proyecto es un **sistema de gestión de ventas** diseñado para administrar
 Permite gestionar clientes, empleados, productos y registrar ventas con sus respectivos detalles, manteniendo un control centralizado de la información.
 
 ---
+---
 ## Integrantes
 - Juan Pablo Avila Quitian - 2214107
 - Sergio Nelson Alberto Gomez Gil - 2214106
@@ -29,7 +30,7 @@ El sistema se apoya en una base de datos relacional que sigue este diseño:
 
 ## 🛠️ Tecnologías utilizadas
 - **Java 21 / Spring Boot** → Backend y servicios REST.
-- **PostgreSQL** → Base de datos principal.
+- **Mongodb** → Base de datos principal.
 - **React**  → Front del servicio.
 
 ---
