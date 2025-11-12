@@ -2,63 +2,65 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-interface Sucursal {
-  id: number;
-  nombre: string;
-  direccion: string;
-  telefono: string;
-}
-
-interface Empleado {
-  id: number;
-  nombre: string;
-  cargo: string;
-  salario: number;
-  sucursal: Sucursal;
-  contraseña: string;
-}
-
 const Login: React.FC = () => {
-  const [username, setUsername] = useState("");
+  const [identificador, setIdentificador] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+
     try {
-      const response = await fetch("http://localhost:9090/api/empleados");
-      if (!response.ok) throw new Error("Error al conectar con la API");
+      const res = await fetch("http://localhost:9090/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ identificador, password }),
+      });
 
-      const users: Empleado[] = await response.json();
-      console.log("👥 Usuarios devueltos:", users);
-
-      // ✅ Comparación robusta (ignora mayúsculas, espacios accidentales)
-      const user = users.find(
-        (u) =>
-          u.nombre.trim().toLowerCase() === username.trim().toLowerCase() &&
-          u.contraseña.trim() === password.trim()
-      );
-
-      console.log("🧍 Usuario encontrado:", user);
-
-      if (user) {
-        // ✅ Normalizar el cargo para evitar problemas al navegar
-        const cargoNormalizado = user.cargo.trim().toLowerCase();
-
-        localStorage.setItem("token", "tokenDePrueba123");
-        localStorage.setItem("cargo", cargoNormalizado);
-        localStorage.setItem("nombre", user.nombre);
-        localStorage.setItem("sucursal", user.sucursal.nombre);
-
-        // ✅ Redirige según el cargo
-        navigate(cargoNormalizado === "admin" ? "/dashboard" : "/mis-ventas");
-      } else {
-        setError("Usuario o contraseña incorrectos");
+      if (!res.ok) {
+        const msg = await res.text();
+        setError("❌ Error al iniciar sesión: " + (msg || res.status));
+        return;
       }
-    } catch (err) {
-      console.error(err);
-      setError("Error al conectar con el servidor");
+
+      const user = await res.json();
+      console.log("🔹 Login exitoso:", user);
+
+      // ✅ Guardar el token JWT en localStorage
+      if (user.token) {
+        localStorage.setItem("token", user.token);
+      } else {
+        console.warn("⚠️ El backend no devolvió token JWT");
+      }
+
+      // ⚠️ Validar que tenga sucursal si no es ADMIN
+      if (
+        (user.sucursalId === null || user.sucursalId === undefined) &&
+        user.role?.toUpperCase() !== "ADMIN"
+      ) {
+        setError("⚠️ El empleado no tiene sucursal asignada.");
+        return;
+      }
+
+      // ✅ Guardar datos del usuario
+      localStorage.setItem("loggedIn", "true");
+      localStorage.setItem("empleadoId", user.id);
+      localStorage.setItem("sucursalId", user.sucursalId);
+      localStorage.setItem("role", user.role?.toUpperCase() || "");
+      localStorage.setItem("nombre", user.nombre);
+      localStorage.setItem("email", user.email);
+
+      // ✅ Redirigir según rol
+      if (user.role?.toUpperCase() === "ADMIN") {
+        navigate("/dashboard");
+      } else {
+        navigate("/mis-ventas");
+      }
+    } catch (error) {
+      console.error("Error al conectar con el backend:", error);
+      setError("⚠️ No se pudo conectar con el servidor.");
     }
   };
 
@@ -87,8 +89,8 @@ const Login: React.FC = () => {
                 type="text"
                 className="form-control"
                 placeholder="Ingresa tu usuario"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={identificador}
+                onChange={(e) => setIdentificador(e.target.value)}
                 required
               />
             </div>
@@ -123,5 +125,6 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
 
 

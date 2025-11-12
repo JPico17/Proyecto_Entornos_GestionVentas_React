@@ -46,8 +46,9 @@ public class VentaController {
         LocalDateTime inicio = hoy.atStartOfDay();
         LocalDateTime fin = hoy.plusDays(1).atStartOfDay();
 
-        BigDecimal totalBd = ventaRepository.sumTotalByFechaRange(inicio, fin);
-        double total = (totalBd == null) ? 0.0 : totalBd.doubleValue();
+        double total = ventaRepository.sumTotalByFechaRange(inicio, fin)
+                .orElse(0.0); // si no hay ventas hoy, devuelve 0
         return ResponseEntity.ok(total);
     }
+
 }
