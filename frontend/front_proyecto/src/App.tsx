@@ -9,6 +9,8 @@ import SalesForm from "./components/SalesForm/SalesForm";
 import Sucursales from "./components/views/Sucursales";
 import Productos from "./components/views/Productos";
 import Empleados from "./components/views/Empleados";
+import Clientes from "./components/views/Clientes";
+
 
 
 const App: React.FC = () => {
@@ -78,6 +80,8 @@ const App: React.FC = () => {
                 <Route path="/productos" element={<Productos />} />
                 <Route path="/mis-ventas" element={role === "empleado" ? <MySales /> : <Navigate to="/administracion" replace />} />
                 <Route path="/registrar-venta" element={role === "empleado" ? <SalesForm /> : <Navigate to="/administracion" replace />} />
+                <Route path="/clientes" element={role === "empleado" ? <Clientes /> : <Navigate to="/administracion" replace />} />
+
                 {/* Redirección por defecto */}
                 <Route path="*" element={<Navigate to="/administracion" replace />} />
               </>

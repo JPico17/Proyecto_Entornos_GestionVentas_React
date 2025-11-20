@@ -7,7 +7,9 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
   const nombre = localStorage.getItem("nombre") || "Usuario";
-  const sucursal = localStorage.getItem("sucursal") || "";
+
+  // 👉 Clave correcta
+  const sucursal = localStorage.getItem("sucursalNombre") || "";
   const [showMenu, setShowMenu] = useState(false);
 
   return (
@@ -22,12 +24,10 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
         height: "70px",
       }}
     >
-      {/* 🧭 Nombre del sistema */}
       <h4 className="fw-bold text-primary mb-0">
         Sistema de Gestión de Ventas
       </h4>
 
-      {/* 🔍 Buscador */}
       <form className="d-flex" style={{ maxWidth: "300px" }}>
         <input
           className="form-control me-2"
@@ -39,7 +39,6 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
         </button>
       </form>
 
-      {/* 👤 Perfil */}
       <div className="position-relative">
         <button
           className="btn btn-light d-flex align-items-center gap-2 border rounded-pill px-3"
@@ -61,6 +60,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
             <div className="px-3 py-2 text-muted small border-bottom">
               📍 {sucursal || "Sin sucursal"}
             </div>
+
             <button
               className="dropdown-item d-flex align-items-center gap-2 text-danger"
               onClick={onLogout}
@@ -75,5 +75,6 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
 };
 
 export default Navbar;
+
 
 

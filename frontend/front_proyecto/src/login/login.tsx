@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login: React.FC = () => {
   const [identificador, setIdentificador] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,38 +25,65 @@ const Login: React.FC = () => {
       }
 
       const user = await res.json();
-      console.log("🔹 Login exitoso:", user);
+      console.log("🔹 USER LOGIN:", user);
 
-      // ✅ Guardar el token JWT en localStorage
+      // ===============================
+      // 1️⃣ Normalizar valores
+      // ===============================
+      const role = (user.role || "").toUpperCase();
+      const sucursalId = user.sucursalId ?? "";
+
+      // ===============================
+      // 2️⃣ Guardar token
+      // ===============================
       if (user.token) {
         localStorage.setItem("token", user.token);
-      } else {
-        console.warn("⚠️ El backend no devolvió token JWT");
       }
 
-      // ⚠️ Validar que tenga sucursal si no es ADMIN
-      if (
-        (user.sucursalId === null || user.sucursalId === undefined) &&
-        user.role?.toUpperCase() !== "ADMIN"
-      ) {
+      // ===============================
+      // 3️⃣ Validar sucursal solo si NO es admin
+      // ===============================
+      if (role !== "ADMIN" && !sucursalId) {
         setError("⚠️ El empleado no tiene sucursal asignada.");
         return;
       }
 
-      // ✅ Guardar datos del usuario
+      // ===============================
+      // 4️⃣ Guardar datos en localStorage
+      // ===============================
       localStorage.setItem("loggedIn", "true");
-      localStorage.setItem("empleadoId", user.id);
-      localStorage.setItem("sucursalId", user.sucursalId);
-      localStorage.setItem("role", user.role?.toUpperCase() || "");
-      localStorage.setItem("nombre", user.nombre);
-      localStorage.setItem("email", user.email);
+      localStorage.setItem("empleadoId", user.id || "");
+      localStorage.setItem("sucursalId", sucursalId);
+      localStorage.setItem("role", role);
+      localStorage.setItem("nombre", user.nombre || "");
+      localStorage.setItem("email", user.email || "");
 
-      // ✅ Redirigir según rol
-      if (user.role?.toUpperCase() === "ADMIN") {
-        navigate("/dashboard");
-      } else {
-        navigate("/mis-ventas");
+      // ===============================
+      // 5️⃣ Obtener nombre de la sucursal
+      // ===============================
+      if (sucursalId) {
+        try {
+          const resSuc = await fetch(`http://localhost:9090/api/sucursales/${sucursalId}`);
+          if (resSuc.ok) {
+            const suc = await resSuc.json();
+            localStorage.setItem("sucursalNombre", suc.nombre || "Sucursal");
+          } else {
+            localStorage.setItem("sucursalNombre", "Sucursal");
+          }
+        } catch {
+          localStorage.setItem("sucursalNombre", "Sucursal");
+        }
       }
+
+      // ===============================
+      // 6️⃣ Redirigir SIN delay ni parches
+      // ===============================
+      if (role === "ADMIN") {
+        window.location.href = "/dashboard";
+      } else {
+        window.location.href = "/mis-ventas";
+      }
+
     } catch (error) {
       console.error("Error al conectar con el backend:", error);
       setError("⚠️ No se pudo conectar con el servidor.");
@@ -125,6 +151,8 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+
 
 
 

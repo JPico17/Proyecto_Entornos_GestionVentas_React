@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { House, FilePlus, Package, MapPin, Users } from "lucide-react";
+import { House, FilePlus, Package, MapPin, Users, UserRound } from "lucide-react";
 
 interface SidebarProps {
   role: "admin" | "empleado";
@@ -71,6 +71,11 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
           {role === "empleado" && (
             <>
               <li className="nav-item">
+              <Link to="/clientes" className={menuItemClass("/clientes")}>
+                <UserRound size={20} /> Clientes
+              </Link>
+              </li>
+              <li className="nav-item">
                 <Link to="/registrar-venta" className={menuItemClass("/registrar-venta")}>
                   <FilePlus size={20} /> Registrar Venta
                 </Link>
@@ -80,7 +85,10 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
                   <Package size={20} /> Mis Ventas
                 </Link>
               </li>
+              
+
             </>
+            
           )}
         </ul>
       </div>
