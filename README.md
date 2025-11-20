@@ -5,6 +5,7 @@ Permite gestionar clientes, empleados, productos y registrar ventas con sus resp
 
 ---
 correr el bakcend: mvnw.cmd spring-boot:run
+correr el front: npm run dev
 ---
 ## Integrantes
 - Juan Pablo Avila Quitian - 2214107
