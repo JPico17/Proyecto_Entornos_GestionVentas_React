@@ -17,6 +17,7 @@ interface Sucursal {
 }
 
 const Productos: React.FC = () => {
+    const [search, setSearch] = useState("");
   const API_BASE_URL = "http://localhost:9090/api";
   const [productos, setProductos] = useState<Producto[]>([]);
   const [sucursales, setSucursales] = useState<Sucursal[]>([]);
@@ -163,6 +164,14 @@ const Productos: React.FC = () => {
                 ? `Productos disponibles en tu sucursal` 
                 : "Listado de todos los productos disponibles en el sistema."}
             </p>
+            <input
+              type="text"
+              className="form-control mt-2"
+              placeholder="Buscar producto por nombre..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              style={{ maxWidth: 300 }}
+            />
           </div>
           {(role === "ADMIN") && (
             <Button variant="success" onClick={() => handleShowModal()} className="d-flex align-items-center gap-2">
@@ -190,26 +199,28 @@ const Productos: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {productos.map((p) => (
-                      <tr key={p.id}>
-                        <td className="fw-bold">{p.nombre}</td>
-                        <td>${p.precio?.toFixed(2) ?? "0.00"}</td>
-                        <td>{p.stock ?? 0}</td>
-                        <td>{p.sucursalNombre ?? "—"}</td>
-                        <td className="text-center">
-                          { (role === "ADMIN") && (
-                            <>
-                              <Button variant="primary" size="sm" className="me-2" onClick={() => handleShowModal(p)}>
-                                <Edit size={14} />
-                              </Button>
-                              <Button variant="danger" size="sm" onClick={() => handleDelete(p.id)}>
-                                <Trash2 size={14} />
-                              </Button>
-                            </>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
+                    {productos
+                      .filter(p => p.nombre.toLowerCase().includes(search.toLowerCase()))
+                      .map((p) => (
+                        <tr key={p.id}>
+                          <td className="fw-bold">{p.nombre}</td>
+                          <td>${p.precio?.toFixed(2) ?? "0.00"}</td>
+                          <td>{p.stock ?? 0}</td>
+                          <td>{p.sucursalNombre ?? "—"}</td>
+                          <td className="text-center">
+                            { (role === "ADMIN") && (
+                              <>
+                                <Button variant="primary" size="sm" className="me-2" onClick={() => handleShowModal(p)}>
+                                  <Edit size={14} />
+                                </Button>
+                                <Button variant="danger" size="sm" onClick={() => handleDelete(p.id)}>
+                                  <Trash2 size={14} />
+                                </Button>
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </Table>
               ) : (

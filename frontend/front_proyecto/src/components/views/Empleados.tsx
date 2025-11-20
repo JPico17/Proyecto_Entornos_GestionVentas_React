@@ -20,6 +20,7 @@ interface Sucursal {
 }
 
 const Empleados: React.FC = () => {
+    const [search, setSearch] = useState("");
   const API_BASE_URL = "http://localhost:9090/api";
   const storedRole = localStorage.getItem("role");
   const role = storedRole ? (storedRole.toUpperCase() === "ADMIN" ? "ADMIN" : storedRole.toLowerCase()) : null;
@@ -196,6 +197,14 @@ const Empleados: React.FC = () => {
           <div>
             <h1 className="fw-bold text-primary">👥 Empleados</h1>
             <p className="text-muted">Gestiona todos los empleados del sistema.</p>
+            <input
+              type="text"
+              className="form-control mt-2"
+              placeholder="Buscar empleado por nombre..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              style={{ maxWidth: 300 }}
+            />
           </div>
           <Button variant="success" onClick={() => handleShowModal()} className="d-flex align-items-center gap-2">
             <Plus size={18} /> Nuevo Empleado
@@ -224,29 +233,31 @@ const Empleados: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {empleados.map((emp) => (
-                      <tr key={emp.id}>
-                        <td className="fw-bold">{emp.nombre}</td>
-                        <td>{emp.usuario}</td>
-                        <td>{emp.email}</td>
-                        <td>{emp.cargo}</td>
-                        <td>
-                          <span className={`badge ${emp.role === "ADMIN" ? "bg-danger" : "bg-info"}`}>
-                            {emp.role}
-                          </span>
-                        </td>
-                        <td>{emp.sucursalNombre || "—"}</td>
-                        <td>${(emp.salario || 0).toLocaleString()}</td>
-                        <td className="text-center">
-                          <Button variant="primary" size="sm" className="me-2" onClick={() => handleShowModal(emp)}>
-                            <Edit size={14} />
-                          </Button>
-                          <Button variant="danger" size="sm" onClick={() => handleDelete(emp.id)}>
-                            <Trash2 size={14} />
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
+                    {empleados
+                      .filter(emp => emp.nombre.toLowerCase().includes(search.toLowerCase()))
+                      .map((emp) => (
+                        <tr key={emp.id}>
+                          <td className="fw-bold">{emp.nombre}</td>
+                          <td>{emp.usuario}</td>
+                          <td>{emp.email}</td>
+                          <td>{emp.cargo}</td>
+                          <td>
+                            <span className={`badge ${emp.role === "ADMIN" ? "bg-danger" : "bg-info"}`}>
+                              {emp.role}
+                            </span>
+                          </td>
+                          <td>{emp.sucursalNombre || "—"}</td>
+                          <td>${(emp.salario || 0).toLocaleString()}</td>
+                          <td className="text-center">
+                            <Button variant="primary" size="sm" className="me-2" onClick={() => handleShowModal(emp)}>
+                              <Edit size={14} />
+                            </Button>
+                            <Button variant="danger" size="sm" onClick={() => handleDelete(emp.id)}>
+                              <Trash2 size={14} />
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </Table>
               ) : (

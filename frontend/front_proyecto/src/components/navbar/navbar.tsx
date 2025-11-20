@@ -28,16 +28,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
         Sistema de Gestión de Ventas
       </h4>
 
-      <form className="d-flex" style={{ maxWidth: "300px" }}>
-        <input
-          className="form-control me-2"
-          type="search"
-          placeholder="Buscar..."
-        />
-        <button className="btn btn-outline-primary" type="submit">
-          <Search size={18} />
-        </button>
-      </form>
+      {/* ...eliminar barra de búsqueda, solo menú de usuario... */}
 
       <div className="position-relative">
         <button
