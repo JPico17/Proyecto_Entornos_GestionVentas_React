@@ -4,6 +4,7 @@ Este proyecto es un **sistema de gestión de ventas** diseñado para administrar
 Permite gestionar clientes, empleados, productos y registrar ventas con sus respectivos detalles, manteniendo un control centralizado de la información.
 
 ---
+correr el bakcend: mvnw.cmd spring-boot:run
 ---
 ## Integrantes
 - Juan Pablo Avila Quitian - 2214107

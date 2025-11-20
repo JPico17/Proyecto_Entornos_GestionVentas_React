@@ -32,11 +32,17 @@ public class VentaController {
 
     @PostMapping
     public ResponseEntity<?> registrarVenta(@RequestBody VentaDTO dto) {
+        System.out.println("CLIENTE ID: " + dto.getClienteId());
+        System.out.println("EMPLEADO ID: " + dto.getEmpleadoId());
+        System.out.println("SUCURSAL ID: " + dto.getSucursalId());
+        dto.getItems().forEach(i -> 
+        System.out.println("PRODUCTO ID: " + i.getProductoId())
+    );
         try {
             Venta nueva = ventaService.registrarVenta(dto);
             return ResponseEntity.ok(nueva);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("{ \"error\": \"" + e.getMessage() + "\" }");
         }
     }
 

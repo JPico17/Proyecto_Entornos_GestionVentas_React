@@ -73,6 +73,13 @@
 			<artifactId>swagger-annotations</artifactId>
 			<version>2.2.18</version>
 		</dependency>
+
+		<!-- springdoc OpenAPI (Swagger UI) starter -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.1.0</version>
+		</dependency>
 		<!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

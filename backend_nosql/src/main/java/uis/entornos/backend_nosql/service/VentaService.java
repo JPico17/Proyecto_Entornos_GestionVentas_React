@@ -32,9 +32,12 @@ public class VentaService {
     }
 
     public Venta registrarVenta(VentaDTO dto) {
-        Cliente cliente = clienteRepo.findById(String.valueOf(dto.getClienteId())).orElseThrow();
-        Empleado empleado = empleadoRepo.findById(String.valueOf(dto.getEmpleadoId())).orElseThrow();
-        Sucursal sucursal = sucursalRepo.findById(String.valueOf(dto.getSucursalId())).orElseThrow();
+        Cliente cliente = clienteRepo.findById(dto.getClienteId())
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+        Empleado empleado = empleadoRepo.findById(String.valueOf(dto.getEmpleadoId()))
+                .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+        Sucursal sucursal = sucursalRepo.findById(String.valueOf(dto.getSucursalId()))
+                .orElseThrow(() -> new RuntimeException("Sucursal no encontrada"));
 
         Venta venta = new Venta();
         venta.setCliente(cliente);
@@ -45,7 +48,8 @@ public class VentaService {
         BigDecimal total = BigDecimal.ZERO;
 
         for (VentaDTO.Item item : dto.getItems()) {
-            Producto producto = productoRepo.findById(String.valueOf(item.getProductoId())).orElseThrow();
+            Producto producto = productoRepo.findById(String.valueOf(item.getProductoId()))
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado: " + item.getProductoId()));
 
             if (producto.getStock() < item.getCantidad()) {
                 throw new RuntimeException("Stock insuficiente para producto: " + producto.getNombre());

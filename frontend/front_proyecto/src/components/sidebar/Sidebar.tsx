@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { House, FilePlus, Package, BarChart3 } from "lucide-react";
+import { House, FilePlus, Package, MapPin, Users } from "lucide-react";
 
 interface SidebarProps {
   role: "admin" | "empleado";
@@ -11,7 +11,9 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
 
   const menuItemClass = (path: string) =>
     `nav-link d-flex align-items-center gap-2 px-3 py-2 rounded ${
-      location.pathname === path ? "bg-primary text-white" : "text-dark hover-bg-light"
+      location.pathname === path
+        ? "bg-primary text-white"
+        : "text-dark"
     }`;
 
   return (
@@ -25,26 +27,47 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
         zIndex: 100,
       }}
     >
+      {/* Header */}
       <div className="p-3 border-bottom">
         <h4 className="fw-bold text-primary mb-0">📊 Gestión</h4>
       </div>
 
+      {/* Menu */}
       <div className="flex-grow-1 p-2">
         <ul className="nav flex-column gap-1">
+          
+          {/* Inicio */}
           <li className="nav-item">
             <Link to="/administracion" className={menuItemClass("/administracion")}>
               <House size={20} /> Inicio
             </Link>
           </li>
 
+          {/* Productos - visible para todos los roles autenticados */}
+          <li className="nav-item">
+            <Link to="/productos" className={menuItemClass("/productos")}>
+              <Package size={20} /> Productos
+            </Link>
+          </li>
+
+          {/* Solo admin */}
           {role === "admin" && (
-            <li className="nav-item">
-              <Link to="/dashboard" className={menuItemClass("/dashboard")}>
-                <BarChart3 size={20} /> Dashboard
-              </Link>
-            </li>
+            <>
+              
+              <li className="nav-item">
+                <Link to="/sucursales" className={menuItemClass("/sucursales")}>
+                  <MapPin size={20} /> Sucursales
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/empleados" className={menuItemClass("/empleados")}>
+                  <Users size={20} /> Empleados
+                </Link>
+              </li>
+            </>
           )}
 
+          {/* Solo empleados */}
           {role === "empleado" && (
             <>
               <li className="nav-item">
@@ -62,12 +85,14 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
         </ul>
       </div>
 
+      {/* Footer */}
       <div className="text-center small text-muted py-3 border-top">
-        © {new Date().getFullYear()} Ventas 3J
+        © {new Date().getFullYear()} Ventas
       </div>
     </div>
   );
 };
+
 
 export default Sidebar;
 

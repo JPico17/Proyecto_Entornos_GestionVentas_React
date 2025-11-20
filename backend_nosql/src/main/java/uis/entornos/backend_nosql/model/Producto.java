@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 
 @Document(collection = "productos") // nombre de la colección en Mongo
-@JsonIgnoreProperties({ "sucursal" })
 public class Producto {
 
     @Id
@@ -19,7 +18,6 @@ public class Producto {
 
     // Referencia a la sucursal (no se embebe, se guarda el ID)
     @DBRef
-    @JsonIgnoreProperties({ "empleados", "productos" })
     private Sucursal sucursal;
 
     public Producto() {

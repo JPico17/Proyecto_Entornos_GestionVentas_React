@@ -25,7 +25,7 @@ public class Venta {
     @DBRef
     private Cliente cliente;
 
-    @DBRef
+    
     private List<DetalleVenta> detalles;
 
     public Venta() {

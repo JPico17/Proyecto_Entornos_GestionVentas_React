@@ -1,5 +1,7 @@
 package uis.entornos.backend_nosql.dto;
 
+import java.math.BigDecimal;
+
 /**
  * DTO para representar un empleado junto con la información de su sucursal.
  * Adaptado para MongoDB (IDs tipo String).
@@ -10,6 +12,7 @@ public class EmpleadoWithSucursalDTO {
     private String nombre;
     private String usuario;
     private String cargo;
+    private BigDecimal salario;
     private String email;
     private String role;
     private String sucursalId;
@@ -48,6 +51,14 @@ public class EmpleadoWithSucursalDTO {
 
     public void setCargo(String cargo) {
         this.cargo = cargo;
+    }
+
+    public BigDecimal getSalario() {
+        return salario;
+    }
+
+    public void setSalario(BigDecimal salario) {
+        this.salario = salario;
     }
 
     public String getEmail() {

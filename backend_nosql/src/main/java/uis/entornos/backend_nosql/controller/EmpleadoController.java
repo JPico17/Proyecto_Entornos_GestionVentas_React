@@ -33,6 +33,7 @@ public class EmpleadoController {
             dto.setNombre(e.getNombre());
             dto.setUsuario(e.getUsuario());
             dto.setCargo(e.getCargo());
+            dto.setSalario(e.getSalario());
             dto.setEmail(e.getEmail());
             dto.setRole(e.getRole() != null ? e.getRole().name() : null);
             if (e.getSucursal() != null) {
