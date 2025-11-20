@@ -333,8 +333,8 @@ const Administracion: React.FC = () => {
       </div>
 
       {/* Sección adicional */}
-      <div className="row mt-5">
-        <div className="col-lg-8">
+      <div className="row mt-5 mb-4">
+        <div className="col-lg-8 mb-3">
           <Card className="shadow-sm border-0">
             <Card.Body>
               <h5 className="card-title">📈 Resumen de ventas</h5>
@@ -345,7 +345,7 @@ const Administracion: React.FC = () => {
           </Card>
         </div>
 
-        <div className="col-lg-4">
+        <div className="col-lg-4 mb-3">
           <Card className="shadow-sm border-0">
             <Card.Body>
               <h5 className="card-title">🧑‍💼 Últimas ventas registradas</h5>
