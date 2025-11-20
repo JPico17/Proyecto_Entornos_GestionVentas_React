@@ -10,6 +10,7 @@ interface Cliente {
 }
 
 const Clientes: React.FC = () => {
+    const [search, setSearch] = useState("");
   const API_BASE_URL = "http://localhost:9090/api";
 
   const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -155,6 +156,14 @@ const Clientes: React.FC = () => {
           <div>
             <h1 className="fw-bold text-primary">👥 Clientes</h1>
             <p className="text-muted">Listado de todos los clientes registrados.</p>
+            <input
+              type="text"
+              className="form-control mt-2"
+              placeholder="Buscar cliente por nombre..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              style={{ maxWidth: 300 }}
+            />
           </div>
 
           <Button
@@ -182,30 +191,32 @@ const Clientes: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {clientes.map((c) => (
-                  <tr key={c.id}>
-                    <td className="fw-bold">{c.nombre}</td>
-                    <td>{c.email}</td>
-                    <td>{c.telefono}</td>
-                    <td className="text-center">
-                      <Button
-                        size="sm"
-                        variant="primary"
-                        className="me-2"
-                        onClick={() => handleShowModal(c)}
-                      >
-                        <Edit size={14} />
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="danger"
-                        onClick={() => handleDelete(c.id)}
-                      >
-                        <Trash2 size={14} />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
+                {clientes
+                  .filter(c => c.nombre.toLowerCase().includes(search.toLowerCase()))
+                  .map((c) => (
+                    <tr key={c.id}>
+                      <td className="fw-bold">{c.nombre}</td>
+                      <td>{c.email}</td>
+                      <td>{c.telefono}</td>
+                      <td className="text-center">
+                        <Button
+                          size="sm"
+                          variant="primary"
+                          className="me-2"
+                          onClick={() => handleShowModal(c)}
+                        >
+                          <Edit size={14} />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="danger"
+                          onClick={() => handleDelete(c.id)}
+                        >
+                          <Trash2 size={14} />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </Table>
           ) : (
