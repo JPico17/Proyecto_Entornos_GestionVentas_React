@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.math.BigDecimal;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 @RequestMapping("/api/ventas")
@@ -55,6 +56,19 @@ public class VentaController {
         double total = ventaRepository.sumTotalByFechaRange(inicio, fin)
                 .orElse(0.0); // si no hay ventas hoy, devuelve 0
         return ResponseEntity.ok(total);
+    }
+
+    @GetMapping("/filtrar")
+    public ResponseEntity<List<Venta>> filtrarVentas(
+            @RequestParam(required = false) String sucursalId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin) {
+        try {
+            List<Venta> ventasFiltradas = ventaService.filtrarVentas(sucursalId, fechaInicio, fechaFin);
+            return ResponseEntity.ok(ventasFiltradas);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
 }

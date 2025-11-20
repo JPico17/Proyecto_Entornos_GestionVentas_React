@@ -6,8 +6,10 @@ import uis.entornos.backend_nosql.model.*;
 import uis.entornos.backend_nosql.dto.VentaDTO;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VentaService {
@@ -84,5 +86,29 @@ public class VentaService {
         return ventaRepo.findById(ventaId)
                 .map(Venta::getDetalles)
                 .orElse(List.of());
+    }
+
+    public List<Venta> filtrarVentas(String sucursalId, LocalDate fechaInicio, LocalDate fechaFin) {
+        List<Venta> ventas = ventaRepo.findAll();
+
+        if (sucursalId != null && !sucursalId.isEmpty()) {
+            ventas = ventas.stream()
+                    .filter(venta -> venta.getSucursal().getId().equals(sucursalId))
+                    .collect(Collectors.toList());
+        }
+
+        if (fechaInicio != null) {
+            ventas = ventas.stream()
+                    .filter(venta -> !venta.getFecha().toLocalDate().isBefore(fechaInicio))
+                    .collect(Collectors.toList());
+        }
+
+        if (fechaFin != null) {
+            ventas = ventas.stream()
+                    .filter(venta -> !venta.getFecha().toLocalDate().isAfter(fechaFin))
+                    .collect(Collectors.toList());
+        }
+
+        return ventas;
     }
 }
