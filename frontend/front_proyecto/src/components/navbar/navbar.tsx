@@ -24,7 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({ onLogout }) => {
         height: "70px",
       }}
     >
-      <h4 className="fw-bold text-primary mb-0">
+      <h4 className="fw-bold text-dark mb-0">
         Sistema de Gestión de Ventas
       </h4>
 

@@ -145,7 +145,7 @@ const Productos: React.FC = () => {
       <div className="container-fluid">
         <div className="row mb-4">
           <div className="col-12">
-            <h1 className="fw-bold text-primary">📦 Productos</h1>
+            <h1 className="fw-bold text-dark">📦 Productos</h1>
             <p className="text-muted">Cargando productos...</p>
           </div>
         </div>
@@ -158,7 +158,7 @@ const Productos: React.FC = () => {
       <div className="row mb-4">
         <div className="col-12 d-flex justify-content-between align-items-center">
           <div>
-            <h1 className="fw-bold text-primary">📦 Productos</h1>
+            <h1 className="fw-bold text-dark">📦 Productos</h1>
             <p className="text-muted">
               {role === "EMPLOYEE" 
                 ? `Productos disponibles en tu sucursal` 

@@ -141,7 +141,7 @@ const Clientes: React.FC = () => {
       <div className="container-fluid">
         <div className="row mb-4">
           <div className="col-12">
-            <h1 className="fw-bold text-primary">👥 Clientes</h1>
+            <h1 className="fw-bold text-dark">👥 Clientes</h1>
             <p className="text-muted">Cargando clientes...</p>
           </div>
         </div>
@@ -154,7 +154,7 @@ const Clientes: React.FC = () => {
       <div className="row mb-4">
         <div className="col-12 d-flex justify-content-between align-items-center">
           <div>
-            <h1 className="fw-bold text-primary">👥 Clientes</h1>
+            <h1 className="fw-bold text-dark">👥 Clientes</h1>
             <p className="text-muted">Listado de todos los clientes registrados.</p>
             <input
               type="text"

@@ -224,7 +224,7 @@ const Administracion: React.FC = () => {
       <div className="container-fluid">
         <div className="row mb-4">
           <div className="col-12">
-            <h1 className="fw-bold text-primary">📊 Panel de Administración</h1>
+            <h1 className="fw-bold text-dark">📊 Panel de Administración</h1>
             <p className="text-muted">Cargando datos...</p>
           </div>
         </div>
@@ -238,7 +238,7 @@ const Administracion: React.FC = () => {
       <div className="container-fluid">
         <div className="row mb-4">
           <div className="col-12">
-            <h1 className="fw-bold text-primary">📊 Panel de Administración</h1>
+            <h1 className="fw-bold text-dark">📊 Panel de Administración</h1>
             <Alert variant="danger">⛔ Acceso denegado. Este panel es sólo para administradores.</Alert>
           </div>
         </div>
@@ -250,7 +250,7 @@ const Administracion: React.FC = () => {
     <div className="container-fluid">
       <div className="row mb-4">
         <div className="col-12">
-          <h1 className="fw-bold text-primary">📊 Panel de Administración</h1>
+          <h1 className="fw-bold text-dark">📊 Panel de Administración</h1>
           <p className="text-muted">
             Bienvenido al sistema de gestión de ventas. Aquí puedes ver un
             resumen general de la actividad de tu negocio.
@@ -332,7 +332,7 @@ const Administracion: React.FC = () => {
         <div className="col-md-4">
           <Card className="shadow-sm border-0">
             <Card.Body>
-              <h5 className="card-title text-primary">📦 Ventas registradas</h5>
+              <h5 className="card-title text-dark">📦 Ventas registradas</h5>
               <h2 className="fw-bold">{productosVendidos}</h2>
               <p className="text-muted">Transacciones en total</p>
             </Card.Body>

@@ -182,7 +182,7 @@ const Empleados: React.FC = () => {
       <div className="container-fluid">
         <div className="row mb-4">
           <div className="col-12">
-            <h1 className="fw-bold text-primary">👥 Empleados</h1>
+            <h1 className="fw-bold text-dark">👥 Empleados</h1>
             <p className="text-muted">Cargando empleados...</p>
           </div>
         </div>
@@ -195,7 +195,7 @@ const Empleados: React.FC = () => {
       <div className="row mb-4">
         <div className="col-12 d-flex justify-content-between align-items-center">
           <div>
-            <h1 className="fw-bold text-primary">👥 Empleados</h1>
+            <h1 className="fw-bold text-dark">👥 Empleados</h1>
             <p className="text-muted">Gestiona todos los empleados del sistema.</p>
             <input
               type="text"

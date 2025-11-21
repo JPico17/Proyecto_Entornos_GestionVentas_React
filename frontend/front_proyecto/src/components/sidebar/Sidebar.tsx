@@ -12,7 +12,7 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
   const menuItemClass = (path: string) =>
     `nav-link d-flex align-items-center gap-2 px-3 py-2 rounded ${
       location.pathname === path
-        ? "bg-primary text-white"
+        ? "bg-warning text-dark"
         : "text-dark"
     }`;
 

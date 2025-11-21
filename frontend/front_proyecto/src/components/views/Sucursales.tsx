@@ -142,7 +142,7 @@ const Sucursales: React.FC = () => {
       <div className="container-fluid">
         <div className="row mb-4">
           <div className="col-12">
-            <h1 className="fw-bold text-primary">🏬 Gestión de Sucursales</h1>
+            <h1 className="fw-bold text-dark">🏬 Gestión de Sucursales</h1>
             <p className="text-muted">Cargando sucursales...</p>
           </div>
         </div>
@@ -156,7 +156,7 @@ const Sucursales: React.FC = () => {
         <div className="col-12">
           <div className="d-flex justify-content-between align-items-center">
             <div>
-              <h1 className="fw-bold text-primary">🏬 Gestión de Sucursales</h1>
+              <h1 className="fw-bold text-dark">🏬 Gestión de Sucursales</h1>
               <p className="text-muted">
                 Administra las sucursales de tu negocio
               </p>
