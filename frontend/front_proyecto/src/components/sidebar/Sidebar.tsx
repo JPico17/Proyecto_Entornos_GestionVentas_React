@@ -36,12 +36,14 @@ const Sidebar: React.FC<SidebarProps> = ({ role }) => {
       <div className="flex-grow-1 p-2">
         <ul className="nav flex-column gap-1">
           
-          {/* Inicio */}
-          <li className="nav-item">
-            <Link to="/administracion" className={menuItemClass("/administracion")}>
-              <House size={20} /> Inicio
-            </Link>
-          </li>
+          {/* Inicio - sólo admin */}
+          {role === "admin" && (
+            <li className="nav-item">
+              <Link to="/administracion" className={menuItemClass("/administracion")}>
+                <House size={20} /> Inicio
+              </Link>
+            </li>
+          )}
 
           {/* Productos - visible para todos los roles autenticados */}
           <li className="nav-item">

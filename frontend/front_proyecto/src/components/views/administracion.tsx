@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Form, Button } from "react-bootstrap";
+import { Card, Form, Button, Alert } from "react-bootstrap";
 import { Bar, Pie } from "react-chartjs-2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -25,6 +25,10 @@ interface Sucursal {
 
 const Administracion: React.FC = () => {
   const API_BASE_URL = "http://localhost:9090/api";
+
+  // Role desde localStorage
+  const storedRole = localStorage.getItem("role");
+  const role = storedRole ? storedRole.toUpperCase() : null;
 
   const [ventasTotales, setVentasTotales] = useState<number>(0);
   const [productosVendidos, setProductosVendidos] = useState<number>(0);
@@ -222,6 +226,20 @@ const Administracion: React.FC = () => {
           <div className="col-12">
             <h1 className="fw-bold text-primary">📊 Panel de Administración</h1>
             <p className="text-muted">Cargando datos...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Verificación de acceso: Sólo ADMIN puede ver este panel
+  if (role !== "ADMIN") {
+    return (
+      <div className="container-fluid">
+        <div className="row mb-4">
+          <div className="col-12">
+            <h1 className="fw-bold text-primary">📊 Panel de Administración</h1>
+            <Alert variant="danger">⛔ Acceso denegado. Este panel es sólo para administradores.</Alert>
           </div>
         </div>
       </div>
